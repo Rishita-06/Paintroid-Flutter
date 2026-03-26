@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:paintroid/app.dart';
 import 'package:paintroid/core/utils/widget_identifier.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/test_utils.dart';
 
 void main() {
@@ -12,6 +13,7 @@ void main() {
   late Widget sut;
 
   setUp(() {
+    SharedPreferences.setMockInitialValues({});
     sut = ProviderScope(
       child: App(showOnboardingPage: false),
     );
@@ -26,7 +28,7 @@ void main() {
       await UIInteraction.createNewImage();
 
       // Open overflow menu
-      await tester.tap(find.byType(PopupMenuButton).last);
+      await tester.tap(find.byIcon(Icons.more_vert));
       await tester.pumpAndSettle();
 
       // Tap Advanced Options
